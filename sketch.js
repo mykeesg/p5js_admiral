@@ -108,7 +108,9 @@ function draw()
 		pilesFall();
 	}
 	else
+	{
 		clear();
+	}
 	
 	for(var i=0;i<board.length;++i)
 	{
