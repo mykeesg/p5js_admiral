@@ -107,6 +107,9 @@ function draw()
 	{
 		pilesFall();
 	}
+	else
+		clear();
+	
 	for(var i=0;i<board.length;++i)
 	{
 		board[i].show(70*i+30,130,20);
