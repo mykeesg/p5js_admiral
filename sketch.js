@@ -64,7 +64,7 @@ function setup()
 	
 	finalCounter = 0;
 	
-	finalPosX = 240;
+	finalPosX = 340;
 	finalPosY = 20;
 	finalSpeedX = random(2,20);
 	finalSpeedY = random(3,10);
@@ -85,7 +85,7 @@ function pilesFall()
 	finalPiles[floor(finalCounter/13)].cards[12-finalCounter%13].show(finalPosX, finalPosY);
 	if(finalPosX<-70 || finalPosX>width)
 	{
-		finalPosX = 240+(finalCounter/14)*70;
+		finalPosX = 340+(finalCounter/14)*60;
 		finalPosY = 20;
 		finalSpeedX = random(2,20);
 		finalSpeedY = random(3,10);
@@ -110,147 +110,147 @@ function draw()
 	else
 	{
 		clear();
-	}
 	
-	for(var i=0;i<board.length;++i)
-	{
-		board[i].show(70*i+30,130,20);
-	}
-	
-	for(var i=0;i<freePiles.length;++i)
-	{
-		freePiles[i].show(60*i+30,20,0);
-	}
-	
-	for(var i=0;i<finalPiles.length;++i)
-	{
-		finalPiles[i].show(60*i+340,20,0);
-	}
-	
-	if(mouseIsPressed)
-	{
-		if(!clicked)
+		for(var i=0;i<board.length;++i)
 		{
-			valid = true;
-			var x = mouseX;
-			var y = mouseY;
-			
-			sourcePile = getPileByCoords(x,y);
-			if(!sourcePile)
-			{
-				clicked = true;
-				return;
-			}
-			
-			
-			if(mouseButton == RIGHT)
-			{
-				clicked = true;
-				var currentCard = sourcePile.getTop();
-				if(currentCard)
-				{
-					for(var i=0;i<finalPiles.length;++i)
-					{
-						if(finalPiles[i].empty() && currentCard.value=='A')
-						{
-							sourcePile.removeTop();
-							finalPiles[i].placeOnTop(currentCard);
-							break;
-						}
-						else if(!finalPiles[i].empty() && finalPiles[i].getTop().color == currentCard.color && finalPiles[i].getTop().lessThan(currentCard))
-						{
-							sourcePile.removeTop();
-							finalPiles[i].placeOnTop(currentCard);
-							break;
-						}
-					}
-				}
-			}
-			if(mouseButton == CENTER)
-			{
-				clicked = true;				
-				var changed = false;
-				do
-				{
-					changed = false;
-						for(var i=0;i<board.length;++i)
-						{
-							var currentCard = board[i].getTop();
-							if(currentCard)
-							{
-								for(var j=0;j<finalPiles.length;++j)
-								{
-									if((finalPiles[j].empty() && currentCard.value=='A') || 
-										(!finalPiles[j].empty() && finalPiles[j].getTop().color == currentCard.color && finalPiles[j].getTop().lessThan(currentCard)))
-									{
-										board[i].removeTop();
-										finalPiles[j].placeOnTop(currentCard);
-										changed = true;
-										break;
-									}
-								}
-							}
-						}
-						
-						for(var i=0;i<freePiles.length;++i)
-						{
-							var currentCard = freePiles[i].getTop();
-							if(currentCard)
-							{
-								for(var j=0;j<finalPiles.length;++j)
-								{
-									if((finalPiles[j].empty() && currentCard.value=='A') || 
-											(!finalPiles[j].empty() && finalPiles[j].getTop().color == currentCard.color && finalPiles[j].getTop().lessThan(currentCard)))
-									{
-										freePiles[i].removeTop();
-										finalPiles[j].placeOnTop(currentCard);
-										changed = true;
-										break;
-									}
-								}
-							}
-						}
-				}
-				while(changed);				
-			}
-			if(mouseButton == LEFT)
-			{
-				if(y<100 && x<280)
-				{
-					movedPile = new Pile();
-					movedPile.placeOnTop(sourcePile.getTop());
-					sourcePile.removeTop();
-
-				}
-				//pile from board, don't let them fuck up the final piles
-				else if(y>100)
-				{
-					if(sourcePile.empty())
-					{
-						clicked = true;
-						return;
-					}
-					//revealing of the top card
-					if(sourcePile.getTop().hidden)
-					{
-						sourcePile.showTop();
-					}
-					else
-					{
-						//(y-130)/20
-						var cardNum = max(sourcePile.cards.length - floor(y/20-6.5),1);
-						cardNum = min(sourcePile.cards.length,cardNum);
-						movedPile = new Pile(sourcePile.getSubPile(cardNum));
-					}
-				}
-				clicked = true;
-			}
+			board[i].show(70*i+30,130,20);
 		}
-		//mouse held down
-		else
+		
+		for(var i=0;i<freePiles.length;++i)
 		{
-			if(movedPile && !movedPile.empty())
-			movedPile.show(mouseX-25, mouseY-10,20);
+			freePiles[i].show(60*i+30,20,0);
+		}
+		
+		for(var i=0;i<finalPiles.length;++i)
+		{
+			finalPiles[i].show(60*i+340,20,0);
+		}
+		
+		if(mouseIsPressed)
+		{
+			if(!clicked)
+			{
+				valid = true;
+				var x = mouseX;
+				var y = mouseY;
+				
+				sourcePile = getPileByCoords(x,y);
+				if(!sourcePile)
+				{
+					clicked = true;
+					return;
+				}
+				
+				
+				if(mouseButton == RIGHT)
+				{
+					clicked = true;
+					var currentCard = sourcePile.getTop();
+					if(currentCard)
+					{
+						for(var i=0;i<finalPiles.length;++i)
+						{
+							if(finalPiles[i].empty() && currentCard.value=='A')
+							{
+								sourcePile.removeTop();
+								finalPiles[i].placeOnTop(currentCard);
+								break;
+							}
+							else if(!finalPiles[i].empty() && finalPiles[i].getTop().color == currentCard.color && finalPiles[i].getTop().lessThan(currentCard))
+							{
+								sourcePile.removeTop();
+								finalPiles[i].placeOnTop(currentCard);
+								break;
+							}
+						}
+					}
+				}
+				if(mouseButton == CENTER)
+				{
+					clicked = true;				
+					var changed = false;
+					do
+					{
+						changed = false;
+							for(var i=0;i<board.length;++i)
+							{
+								var currentCard = board[i].getTop();
+								if(currentCard)
+								{
+									for(var j=0;j<finalPiles.length;++j)
+									{
+										if((finalPiles[j].empty() && currentCard.value=='A') || 
+											(!finalPiles[j].empty() && finalPiles[j].getTop().color == currentCard.color && finalPiles[j].getTop().lessThan(currentCard)))
+										{
+											board[i].removeTop();
+											finalPiles[j].placeOnTop(currentCard);
+											changed = true;
+											break;
+										}
+									}
+								}
+							}
+							
+							for(var i=0;i<freePiles.length;++i)
+							{
+								var currentCard = freePiles[i].getTop();
+								if(currentCard)
+								{
+									for(var j=0;j<finalPiles.length;++j)
+									{
+										if((finalPiles[j].empty() && currentCard.value=='A') || 
+												(!finalPiles[j].empty() && finalPiles[j].getTop().color == currentCard.color && finalPiles[j].getTop().lessThan(currentCard)))
+										{
+											freePiles[i].removeTop();
+											finalPiles[j].placeOnTop(currentCard);
+											changed = true;
+											break;
+										}
+									}
+								}
+							}
+					}
+					while(changed);				
+				}
+				if(mouseButton == LEFT)
+				{
+					if(y<100 && x<280)
+					{
+						movedPile = new Pile();
+						movedPile.placeOnTop(sourcePile.getTop());
+						sourcePile.removeTop();
+
+					}
+					//pile from board, don't let them fuck up the final piles
+					else if(y>100)
+					{
+						if(sourcePile.empty())
+						{
+							clicked = true;
+							return;
+						}
+						//revealing of the top card
+						if(sourcePile.getTop().hidden)
+						{
+							sourcePile.showTop();
+						}
+						else
+						{
+							//(y-130)/20
+							var cardNum = max(sourcePile.cards.length - floor(y/20-6.5),1);
+							cardNum = min(sourcePile.cards.length,cardNum);
+							movedPile = new Pile(sourcePile.getSubPile(cardNum));
+						}
+					}
+					clicked = true;
+				}
+			}
+			//mouse held down
+			else
+			{
+				if(movedPile && !movedPile.empty())
+				movedPile.show(mouseX-25, mouseY-10,20);
+			}
 		}
 	}
 }
