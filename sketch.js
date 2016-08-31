@@ -442,6 +442,5 @@ function mouseReleased()
 	{
 		alert('Game won!');
 		gameover = true;
-		setup();
 	}
 }
